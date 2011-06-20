@@ -3,6 +3,9 @@
 import nudge.arg as args
 from nudge import serve, Endpoint, Args
 from nudge.renderer import HTML
+from jinja2 import Template, Environment, PackageLoader
+
+env = Environment(loader=PackageLoader('app', 'templates'))
 
 class ExampleException(Exception): pass
 
@@ -17,13 +20,9 @@ class RmlApplication():
         NOTE: This is NOT the way to use nudge, just doing this
               to have something to look at.
         """
-        return """
-            <html>
-            <head><title>Ray M. Leyva ( NUDGE EDITION )<title></head>
-            <body>
-            <h1>Ray M. Leyva - The Nudge Years</h1>
-            </html>
-            """
+        tmpl = env.get_template('index.html')
+        vals = {}
+        return tmpl.render(vals) 
 
 rml = RmlApplication()
 
